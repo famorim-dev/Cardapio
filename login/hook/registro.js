@@ -7,14 +7,15 @@ form.addEventListener("submit", async (event) => {
 
     const email = document.getElementById("email").value;
     const senha = document.getElementById("senha").value;
+    const nome = document.getElementById("nome").value;
 
     try {
-        const response = await fetch(`${API}/auth/login`, {
+        const response = await fetch(`${API}/auth/registro`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ email, senha })
+            body: JSON.stringify({nome, email, senha })
         });
 
         if (!response.ok) {
@@ -31,12 +32,8 @@ form.addEventListener("submit", async (event) => {
             alert(errorText);
             return;
         }
-        console.log(response)
-        const token = await response.text();
-        console.log(token)
-        localStorage.setItem("token", token);
 
-        window.location.href = "../../index.html";
+        window.location.href = "../login.html";
 
     } catch (err) {
         console.error(err);
