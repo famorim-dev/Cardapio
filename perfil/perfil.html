@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     const success = await updateOrderStatus(order.id, token);
                     if (success) {
                         statusSpan.textContent = "Cancelado";
-                        cancelBtn.remove(); // remove o botão se o pedido foi cancelado
+                        cancelBtn.remove();
                     }
                 });
             }
