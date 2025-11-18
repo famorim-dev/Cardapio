@@ -15,14 +15,12 @@
         <button id="logout" class="mt-4 bg-red-500 px-6 py-2 rounded-lg hover:bg-red-600 transition">Sair</button>
     </div>
 
-    
     <h2 class="text-xl font-bold mt-10 mb-4 w-full max-w-4xl">Meus Pedidos</h2>
-    <div id="orders-container" class="w-full max-w-4xl flex flex-col gap-4">
-        
-    </div>
+    <div id="orders-container" class="w-full max-w-4xl flex flex-col gap-4"></div>
 
 <script type="module">
 import { getUserOrders } from './hook/buscarUsuario.js';
+import { updateOrderStatus } from './hook/cancelarPedido.js';
 
 const token = localStorage.getItem("token");
 if (!token) window.location.href = "../login.html";
@@ -61,16 +59,35 @@ document.addEventListener("DOMContentLoaded", async () => {
                 `<li>${item.produto} x ${item.quantidade}</li>`
             ).join("");
 
+            const isCancelled = order.status.toLowerCase() === "cancelado";
+
             orderDiv.innerHTML = `
                 <p class="font-bold text-indigo-400 mb-2">Pedido #${order.id.split('-')[0]}</p>
                 <ul class="ml-4 list-disc mb-2">${itemsList}</ul>
-                <p>Status: <span class="font-semibold text-yellow-400">${order.status}</span></p>
+                <p>Status: <span class="font-semibold text-yellow-400" id="status-${order.id}">${order.status}</span></p>
                 <p>Valor total: <span class="font-semibold text-green-400">R$ ${order.valor_total.toFixed(2)}</span></p>
                 <p>Pagamento: ${order.forma_pagamento}</p>
                 <p>Endereço: ${order.endereco}</p>
                 <p class="text-zinc-400 text-sm mt-1">Data: ${new Date(order.dataCriacao).toLocaleDateString()}</p>
+                ${!isCancelled ? `<button id="cancel-${order.id}" class="mt-2 bg-red-500 px-4 py-1 rounded hover:bg-red-600 transition">Cancelar Pedido</button>` : ""}
             `;
             ordersContainer.appendChild(orderDiv);
+
+            if (!isCancelled) {
+                const cancelBtn = document.getElementById(`cancel-${order.id}`);
+                const statusSpan = document.getElementById(`status-${order.id}`);
+
+                cancelBtn.addEventListener("click", async () => {
+                    const confirmCancel = confirm("Deseja realmente cancelar este pedido?");
+                    if (!confirmCancel) return;
+
+                    const success = await updateOrderStatus(order.id, token);
+                    if (success) {
+                        statusSpan.textContent = "Cancelado";
+                        cancelBtn.remove(); // remove o botão se o pedido foi cancelado
+                    }
+                });
+            }
         });
     } else {
         ordersContainer.innerHTML = "<p class='text-zinc-400'>Você ainda não fez pedidos.</p>";
