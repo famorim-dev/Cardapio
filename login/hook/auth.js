@@ -28,18 +28,29 @@ form.addEventListener("submit", async (event) => {
                 errorText = text; 
             }
 
-            alert(errorText);
+            Toastify({
+                text: "Usuário ou senha inválidos",
+                duration: 3000,
+                gravity: "top",
+                position: "center",
+                backgroundColor: "#f56565",
+            }).showToast();;
             return;
         }
-        console.log(response)
+
         const token = await response.text();
-        console.log(token)
+
         localStorage.setItem("token", token);
 
         window.location.href = "../../index.html";
 
     } catch (err) {
-        console.error(err);
-        alert("Erro de conexão com o servidor");
+        Toastify({
+            text: "Erro de conexão com o servidor!",
+            duration: 3000,
+            gravity: "top",
+            position: "center",
+            backgroundColor: "#f56565",
+        }).showToast();
     }
 });

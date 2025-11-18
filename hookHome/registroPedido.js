@@ -59,15 +59,20 @@ export async function sendOrder(cart, updateCartModal) {
         }
 
         const result = await response.text();
-        console.log("Pedido realizado →", result);
+        
 
-        alert("Pedido realizado com sucesso!");
+        Toastify({
+            text: "Pedido Realizado, aguarde o processamento!",
+            duration: 3000,
+            gravity: "top",
+            position: "center",
+            backgroundColor: "#00FF00",
+        }).showToast();
 
         cart.length = 0;
         updateCartModal();
 
-    } catch (err) {
-        console.error(err);
-        alert("Erro de conexão com o servidor");
+    } catch (err) {   
+        console.log("Erro de conexão com o servidor");
     }
 }

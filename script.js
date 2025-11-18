@@ -12,6 +12,25 @@ const addressWarn = document.getElementById("address-warn")
 const checkoutBtn = document.getElementById("checkout-btn")
 
 let cart = []; // array
+checkoutBtn.addEventListener("click", (e) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+
+        e.preventDefault();
+
+        Toastify({
+            text: "Você precisa estar logado para finalizar o pedido!",
+            duration: 3000,
+            gravity: "top",
+            position: "center",
+            backgroundColor: "#f56565",
+        }).showToast();
+
+        return;
+    }
+});
+
 checkoutBtn.addEventListener("click", () => sendOrder(cart, updateCartModal));
 
 // abrir o modal do carrinho
@@ -138,50 +157,14 @@ addressInput.addEventListener("input", function(event){
     //
 })
 
-// finalizar pedido
-checkoutBtn.addEventListener("click", function(){
-    const isOpen = checkRestaurantOpen();
-    if(!isOpen){
-        Toastify({
-            text: "Restaurante fechado! Consulte o horário de funcionamento.",
-            duration: 3000,
-            close: true,
-            gravity: "top", // `top` or `bottom`
-            position: "right", // `left`, `center` or `right`
-            stopOnFocus: true, // Prevents dismissing of toast on hover
-            style: {
-              background: "#ef4444",
-            },
-            onClick: function(){} // Callback after click
-          }).showToast();
-        return;
+
+
+document.getElementById("perfil").addEventListener("click", () => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+        window.location.href = "./perfil/perfil.html";
+    } else {
+        window.location.href = "./login/login.html";
     }
-    if(cart.length === 0) return;
-    if (addressInput.value === ""){
-        addressWarn.style.display = "flex"
-        addressInput.classList.add("border-red-500")
-        return;
-    }
-
-})
-
-// verificar a hora e manipular o card horario
-function checkRestaurantOpen(){
-    const data = new Date();
-    const hora = data.getHours();
-    return hora >= 18 && hora < 24; // boolean true/false
-
-    
-}
-
-const spanItem = document.getElementById("date-span")
-const isOpen = checkRestaurantOpen();
-
-if(isOpen){
-    spanItem.classList.remove("bg-red-500");
-    spanItem.classList.add("bg-green-600")
-}else{
-    spanItem.classList.remove("bg-green-600")
-    spanItem.classList.add("bg-red-500")
-
-}
+});
