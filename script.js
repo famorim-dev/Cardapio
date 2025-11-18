@@ -1,15 +1,18 @@
+import { sendOrder } from './hookHome/registroPedido.js'
+
 const menu = document.getElementById("menu")
 const cartBtn = document.getElementById("cart-btn")
 const cartModal = document.getElementById("cart-modal")
 const cartItemsContainer = document.getElementById("cart-items")
 const cartTotal = document.getElementById("cart-total")
-const checkoutBtn = document.getElementById("checkout-btn")
 const closeModalBtn= document.getElementById("close-modal-btn")
 const cartCounter  =document.getElementById("cart-count")
 const addressInput = document.getElementById("address")
 const addressWarn = document.getElementById("address-warn")
+const checkoutBtn = document.getElementById("checkout-btn")
 
 let cart = []; // array
+checkoutBtn.addEventListener("click", () => sendOrder(cart, updateCartModal));
 
 // abrir o modal do carrinho
 cartBtn.addEventListener("click", function(){
@@ -31,7 +34,7 @@ closeModalBtn.addEventListener("click", function(){
 })
 
 menu.addEventListener("click", function(event){
-   // console.log(event.target) - PARA PEGAR O TARGET DE QUALQUER ITEM
+   
    let parentButton = event.target.closest(".add-to-cart-btn")
    
    if(parentButton){
@@ -83,7 +86,7 @@ function updateCartModal(){
                     <p class="font-medium mt-2">R$ ${item.price.toFixed(2)}</p>
                 </div>
 
-                <button class="remove-from-cart-btn" data-name="${item.name}">
+                <button class="remove-from-cart-btn border bg-red-700 rounded-md p-2 text-white" data-name="${item.name}">
                     Remover
                 </button>
 
@@ -159,21 +162,6 @@ checkoutBtn.addEventListener("click", function(){
         addressInput.classList.add("border-red-500")
         return;
     }
-
-    // enviar o pedido para api do zapzap
-    const cartItems = cart.map((item) => {
-        return (
-            ` ${item.name} Quantidade: (${item.quantity}) Preço: R$${item.price} |`
-        )
-    }).join("")
-
-    const message = encodeURIComponent(cartItems)
-    const phone = ""
-
-    window.open(`https://wa.me/${phone}?text=${message} Endereço: ${addressInput.value}`, "_blank")
-
-    cart.length = 0;
-    updateCartModal();
 
 })
 
