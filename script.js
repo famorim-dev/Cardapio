@@ -11,7 +11,7 @@ const addressInput = document.getElementById("address")
 const addressWarn = document.getElementById("address-warn")
 const checkoutBtn = document.getElementById("checkout-btn")
 
-let cart = []; // array
+let cart = [];
 checkoutBtn.addEventListener("click", (e) => {
     const token = localStorage.getItem("token");
 
