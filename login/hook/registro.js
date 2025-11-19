@@ -29,14 +29,25 @@ form.addEventListener("submit", async (event) => {
                 errorText = text; 
             }
 
-            alert(errorText);
+            Toastify({
+                text: errorText,
+                duration: 3000,
+                gravity: "top",
+                position: "center",
+                backgroundColor: "#f56565",
+            }).showToast();
             return;
         }
 
-        window.location.href = "../login.html";
+        window.location.href = "./login.html";
 
     } catch (err) {
-        console.error(err);
-        alert("Erro de conexão com o servidor");
+        Toastify({
+            text: "Erro de conexão com o servidor",
+            duration: 3000,
+            gravity: "top",
+            position: "center",
+            backgroundColor: "#f56565",
+        }).showToast();
     }
 });

@@ -1,5 +1,5 @@
 import {API} from '../../utils/api.js'
-export async function updateOrderStatus(orderId, token, status = "cancelado") {
+export async function updateOrderStatus(orderId, token = localStorage.getItem("token"), status = "cancelado") {
     try {
         const response = await fetch(`${API}/pedido/${orderId}/status`, {
             method: "PATCH",
@@ -12,14 +12,31 @@ export async function updateOrderStatus(orderId, token, status = "cancelado") {
 
         if (!response.ok) {
             const errorData = await response.json();
-            alert(`Erro ao atualizar status: ${errorData.message || "Tente novamente."}`);
+            Toastify({
+                text: `Erro ao atualizar status: ${errorData.message || "Tente novamente."}`,
+                duration: 3000,
+                gravity: "top",
+                position: "center",
+                backgroundColor: "#f56565",
+            }).showToast();
             return false;
         }
-
+        Toastify({
+            text: "Pedido cancelado!",
+            duration: 3000,
+            gravity: "top",
+            position: "center",
+            backgroundColor: "#EA580C",
+        }).showToast();
         return true;
     } catch (err) {
-        console.log(err.message)
-        alert("Erro de rede. Tente novamente.");
+        Toastify({
+            text: "Erro de rede. Tente novamente.",
+            duration: 3000,
+            gravity: "top",
+            position: "center",
+            backgroundColor: "#f56565",
+        }).showToast();
         return false;
     }
 }

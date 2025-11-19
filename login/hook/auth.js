@@ -34,7 +34,7 @@ form.addEventListener("submit", async (event) => {
                 gravity: "top",
                 position: "center",
                 backgroundColor: "#f56565",
-            }).showToast();;
+            }).showToast();
             return;
         }
 

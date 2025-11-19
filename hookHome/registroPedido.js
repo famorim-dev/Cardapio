@@ -5,12 +5,24 @@ export async function sendOrder(cart, updateCartModal) {
     const paymentOption = document.querySelector("input[name='btn']:checked").value;
 
     if (cart.length === 0) {
-        alert("Carrinho vazio");
+        Toastify({
+            text: "Carrinho vazio",
+            duration: 3000,
+            gravity: "top",
+            position: "center",
+            backgroundColor: "#f56565",
+        }).showToast();
         return;
     }
 
     if (!address) {
-        alert("Digite seu endereço completo");
+        Toastify({
+            text: "Digite seu endereço completo",
+            duration: 3000,
+            gravity: "top",
+            position: "center",
+            backgroundColor: "#f56565",
+        }).showToast();
         return;
     }
 
@@ -73,6 +85,12 @@ export async function sendOrder(cart, updateCartModal) {
         updateCartModal();
 
     } catch (err) {   
-        console.log("Erro de conexão com o servidor");
+        Toastify({
+            text: "Erro de conexão com o servidor",
+            duration: 3000,
+            gravity: "top",
+            position: "center",
+            backgroundColor: "#f56565",
+        }).showToast();
     }
 }
