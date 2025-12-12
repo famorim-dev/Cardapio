@@ -1,1 +1,1 @@
-export const API = "https://apihamburgueriaspringboot.onrender.com"
+export const API = "http://localhost:8080"

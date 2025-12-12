@@ -12,13 +12,33 @@ export async function updateOrderStatus(orderId, token, status) {
 
         if (!response.ok) {
             const errorData = await response.json();
-            alert(`Erro ao atualizar status: ${errorData.message || "Tente novamente."}`);
+            Toastify({
+                text: `Erro ao atualizar status: ${errorData.message || "Tente novamente."}`,
+                duration: 3000,
+                gravity: "top",
+                position: "center",
+                backgroundColor: "#f56565",
+            }).showToast();
             return false;
-        }
+        } 
 
+        Toastify({
+            text: "Pedido Atualizado!",
+            duration: 3000,
+            gravity: "top",
+            position: "center",
+            backgroundColor: "#00FF00",
+        }).showToast();
         return true;
+        
     } catch (err) {
-        alert("Erro de rede. Tente novamente.");
+            Toastify({
+                text: `Erro ao atualizar status: ${errorData.message || "Tente novamente."}`,
+                duration: 3000,
+                gravity: "top",
+                position: "center",
+                backgroundColor: "#f56565",
+            }).showToast();
         return false;
     }
 }

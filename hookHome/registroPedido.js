@@ -65,8 +65,7 @@ export async function sendOrder(cart, updateCartModal) {
             } catch {
                 errorText = text;
             }
-
-            alert(errorText);
+            
             return;
         }
 

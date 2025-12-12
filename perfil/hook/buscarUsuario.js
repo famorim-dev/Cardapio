@@ -10,11 +10,10 @@ export async function getUserOrders(token) {
 
         const orders = await response.json();
 
-        const profile = orders.length > 0 ? orders[0].usuario : null;
+        const profile = orders.length > 0 ? orders[0] : null;
 
         return { profile, orders };
     } catch (err) {
-        console.error(err);
         return { profile: null, orders: [] };
     }
 }

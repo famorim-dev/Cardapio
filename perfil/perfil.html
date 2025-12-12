@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (profile) {
         profileName.textContent = profile.nome;
-        profileEmail.textContent = profile.email;
+        profileEmail.textContent = profile.usuarioEmail;
         if (profile.image) profileImage.src = profile.image;
     } else {
         profileName.textContent = "Usuário";

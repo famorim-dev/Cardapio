@@ -1,7 +1,7 @@
 import {API} from '../../utils/api.js'
 export async function updateOrderStatus(orderId, token = localStorage.getItem("token"), status = "cancelado") {
     try {
-        const response = await fetch(`${API}/pedido/${orderId}/status`, {
+        const response = await fetch(`${API}/pedido/${orderId}/cancelado`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
